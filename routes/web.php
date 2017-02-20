@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+| All static pages routed using pagesController
+*/
+Route::get('/', 'PageController@index');
+Route::get('about', 'PageController@about');
+Route::get('contact', 'PageController@contact');
+
+Route::resource('posts', 'PostController');
