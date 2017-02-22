@@ -5,6 +5,6 @@
 <title>Laravas | @yield('title')</title>
 
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 @yield('header')

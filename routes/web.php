@@ -11,11 +11,11 @@
 |
 */
 
-/*
-| All static pages routed using pagesController
-*/
-Route::get('/', 'PageController@index');
-Route::get('about', 'PageController@about');
-Route::get('contact', 'PageController@contact');
+Route::group(['middleware' => ['web']], function () {
 
-Route::resource('posts', 'PostController');
+  Route::get('/', 'PageController@index');
+  Route::get('about', 'PageController@about');
+  Route::get('contact', 'PageController@contact');
+  Route::resource('posts', 'PostController');
+
+});
