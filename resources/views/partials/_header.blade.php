@@ -6,5 +6,5 @@
 
 <!-- Bootstrap -->
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-
+{{ Html::style('css/styles.css') }}
 @yield('header')
