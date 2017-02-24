@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Session;
+use Carbon\Carbon as Carbon;
 
 class PostController extends Controller
 {
@@ -76,7 +77,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.edit')->withPost($post);
     }
 
     /**
@@ -88,7 +90,23 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      //validate data
+      $this->validate($request, [
+        'title' => 'required|max:255',
+        'body' => 'required'
+      ]);
+
+      //save to db
+      $post = Post::find($id);
+      $post->title = $request->input('title');
+      $post->body  = $request->input('body');
+      $post->save(['timestamps' => true]);
+
+      //Flash Message
+      Session::flash('success', 'Updated the post successfully!');
+
+      //Redirect with flash message and post id
+      return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -99,6 +117,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        Session::flash('success', 'The post was successfully deleted!');
+        return redirect()->route('posts.index');
     }
 }
