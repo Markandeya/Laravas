@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
         return view('posts.index')->withPosts($posts);
     }
 
@@ -41,12 +41,14 @@ class PostController extends Controller
         //validate data
         $this->validate($request, [
           'title' => 'required|max:255',
+          'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
           'body' => 'required'
         ]);
 
         //store onto database::eloquent
         $post = new Post;
         $post->title = $request->title;
+        $post->slug  = $request->slug;
         $post->body = $request->body;
         $post->save();
 
@@ -93,12 +95,14 @@ class PostController extends Controller
       //validate data
       $this->validate($request, [
         'title' => 'required|max:255',
+        'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
         'body' => 'required'
       ]);
 
       //save to db
       $post = Post::find($id);
       $post->title = $request->input('title');
+      $post->slug = $request->input('slug');
       $post->body  = $request->input('body');
       $post->save(['timestamps' => true]);
 

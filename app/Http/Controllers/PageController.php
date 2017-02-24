@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PageController extends Controller
 {
     public function index() {
-      return view('pages.welcome');
+      $posts = Post::orderBy('id', 'desc')->take(5)->get();
+      return view('pages.welcome')->withPosts($posts);
     }
 
     public function contact() {

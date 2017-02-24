@@ -38,6 +38,12 @@
           @endforeach
         </tbody>
       </table>
+      <div class="text-center">
+        {!! $posts->links() !!}
+      </div>
+      <div class="text-center">
+        {!! $posts->currentPage() !!} of {!! $posts->lastPage() !!}
+      </div>
     </div>
   </div>
 @endsection

@@ -11,6 +11,7 @@
       <form method="post" action="{{ action('PostController@store') }}" data-parsley-validate>
         {{ csrf_field() }}
         Title:<input type="text" name="title" class="form-control" data-parsley-required>
+        Slug:<input type="text" name="slug" class="form-control" data-parsley-required minlength="5" maxlength="255">
         Body:<textarea name="body" class="form-control" data-parsley-required></textarea>
         <br>
         <input type="submit" value="Create" class="btn btn-success btn-block">
