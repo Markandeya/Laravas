@@ -28,7 +28,11 @@
               <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="{{ route('logout') }}">Logout</a></li>
+              <li>
+                {!! Form::open(['route' => ['logout'], 'method'=>'POST' ]) !!}
+                {{ Form::submit('logout', ['class' => 'btn btn-block']) }}
+                {!! Form::close() !!}
+              </li>
             </ul>
           </li>
         @else
