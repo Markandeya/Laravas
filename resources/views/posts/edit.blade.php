@@ -11,6 +11,8 @@
       {{ Form::text('title', null, ['class' => 'form-control', 'data-parsley-required' => '', 'maxlength' =>'255']) }}
       {{ Form::label('slug', 'Slug:') }}
       {{ Form::text('slug', null, ['class' => 'form-control form-spacing-top', 'data-parsley-required' => '', 'minlength' => '5', 'maxlength' =>'255']) }}
+      {{ Form::label('category_id', 'Category:') }}
+      {{ Form::select('category_id', $cats, null,['class' => 'form-control']) }}<br>
       {{ Form::label('body', 'Body:', ['class' => 'form-spacing-top']) }}
       {{ Form::textarea('body', null, ['class' => 'form-control', 'data-parsley-required' => '']) }}
     </div>

@@ -12,6 +12,12 @@
         {{ csrf_field() }}
         Title:<input type="text" name="title" class="form-control" data-parsley-required>
         Slug:<input type="text" name="slug" class="form-control" data-parsley-required minlength="5" maxlength="255">
+        Category:
+        <select class="form-control" name="category" data-parsley-required>
+          @foreach ($categories as $category)
+            <option value="{{ $category->id }}"> {{ $category->name }}</option>
+          @endforeach
+        </select>
         Body:<textarea name="body" class="form-control" data-parsley-required></textarea>
         <br>
         <input type="submit" value="Create" class="btn btn-success btn-block">

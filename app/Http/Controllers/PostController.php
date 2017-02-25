@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Session;
-use Carbon\Carbon as Carbon;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -31,7 +31,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        return view('posts.create')->withCategories($categories);
     }
 
     /**
@@ -46,6 +47,7 @@ class PostController extends Controller
         $this->validate($request, [
           'title' => 'required|max:255',
           'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+          'category' => 'required|integer',
           'body' => 'required'
         ]);
 
@@ -53,6 +55,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->title;
         $post->slug  = $request->slug;
+        $post->category_id  = $request->category;
         $post->body = $request->body;
         $post->save();
 
@@ -84,7 +87,12 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('posts.edit')->withPost($post);
+        $categories = Category::all();
+        $cats = array();
+        foreach ($categories as $category) {
+          $cats[$category->id] = $category->name;
+        }
+        return view('posts.edit')->withPost($post)->withCats($cats);
     }
 
     /**
@@ -101,12 +109,14 @@ class PostController extends Controller
       if($request->slug == $post->slug) {
         $this->validate($request, [
           'title' => 'required|max:255',
+          'category' => 'required|integer',
           'body' => 'required'
         ]);
       } else {
         $this->validate($request, [
           'title' => 'required|max:255',
           'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+          'category' => 'required|integer',
           'body' => 'required'
         ]);
       }
@@ -115,6 +125,7 @@ class PostController extends Controller
 
       $post->title = $request->input('title');
       $post->slug = $request->input('slug');
+      $post->category_id  = $request->category;
       $post->body  = $request->input('body');
       $post->save(['timestamps' => true]);
 
