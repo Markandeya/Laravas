@@ -10,8 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+  //Authentication
+  Route::get('auth/login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+  Route::post('auth/login', ['as' => 'login', 'uses' => 'Auth\LoginController@login']);
+  Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
 
-Route::group(['middleware' => ['web']], function () {
+  //Registration
+  Route::get('auth/register', 'Auth\RegisterController@showRegistrationForm');
+  Route::post('auth/register', 'Auth\RegisterController@register');
 
   Route::get('blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@single'])->where('slug', '[\w\d\-\_]+');
   Route::get('blog', 'BlogController@index');
@@ -20,4 +26,7 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('contact', 'PageController@contact');
   Route::resource('posts', 'PostController');
 
-});
+
+  //temporary hack to overcome default /login and /home route on unauthorized access
+  Route::get('/login', 'Auth\LoginController@showLoginForm');
+  Route::get('/home', 'PageController@index');

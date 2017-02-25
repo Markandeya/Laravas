@@ -9,6 +9,10 @@ use Carbon\Carbon as Carbon;
 
 class PostController extends Controller
 {
+    public function __construct() {
+      $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -106,7 +110,7 @@ class PostController extends Controller
           'body' => 'required'
         ]);
       }
-      
+
       //save to db
 
       $post->title = $request->input('title');
