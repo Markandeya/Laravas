@@ -37,6 +37,7 @@
   // Posts and Categories protected by middleware auth
   Route::resource('posts', 'PostController');
   Route::resource('categories', 'CategoryController', ['except' => ['create']]);
+  Route::resource('tags', 'TagController', ['except' => ['create']]);
 
   //temporary hack to overcome default /login and /home route on unauthorized access
   Route::get('/login', 'Auth\LoginController@showLoginForm');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use Session;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -32,7 +33,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('posts.create')->withCategories($categories);
+        $tags = Tag::all();
+        return view('posts.create')->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -47,7 +49,7 @@ class PostController extends Controller
         $this->validate($request, [
           'title' => 'required|max:255',
           'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-          'category' => 'required|integer',
+          'category' => 'integer',
           'body' => 'required'
         ]);
 
@@ -58,6 +60,9 @@ class PostController extends Controller
         $post->category_id  = $request->category;
         $post->body = $request->body;
         $post->save();
+
+        //tag association
+        $post->tags()->sync($request->tags, false);
 
         //success message
         Session::flash('success', 'New post created!');
@@ -87,12 +92,20 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
         $categories = Category::all();
-        $cats = array();
+        $cats = array();//form needs name value pairs
         foreach ($categories as $category) {
           $cats[$category->id] = $category->name;
         }
-        return view('posts.edit')->withPost($post)->withCats($cats);
+
+        $tags = Tag::all();
+        $tags2 = array();//form needs name value pairs
+        foreach ($tags as $tag) {
+          $tags2[$tag->id] = $tag->name;
+        }
+
+        return view('posts.edit')->withPost($post)->withCats($cats)->withTags($tags2);
     }
 
     /**
@@ -109,14 +122,14 @@ class PostController extends Controller
       if($request->slug == $post->slug) {
         $this->validate($request, [
           'title' => 'required|max:255',
-          'category' => 'required|integer',
+          'category' => 'integer',
           'body' => 'required'
         ]);
       } else {
         $this->validate($request, [
           'title' => 'required|max:255',
           'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-          'category' => 'required|integer',
+          'category' => 'integer',
           'body' => 'required'
         ]);
       }
@@ -129,6 +142,12 @@ class PostController extends Controller
       $post->body  = $request->input('body');
       $post->save(['timestamps' => true]);
 
+      //tag association with true to override relations
+      if(isset($request->tags))
+        $post->tags()->sync($request->tags, true);
+      else {
+        $post->tags()->sync([], true);
+      }
       //Flash Message
       Session::flash('success', 'Updated the post successfully!');
 

@@ -21,10 +21,10 @@
     </div>
     <div class="col-md-4">
       <div class="well">
-        {!! Form::open(['route' => 'categories.store', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'categories.store', 'method' => 'POST', 'data-parsley-validate' => '']) !!}
           <h2>New Category</h2>
           {{ Form::label('name', 'Name:')}}
-          {{ Form::text('name', null, ['class' => 'form-control']) }}<br>
+          {{ Form::text('name', null, ['class' => 'form-control', 'data-parsley-required' => '', 'minlength' => '5', 'maxlength' =>'255']) }}<br>
           {{ Form::submit('Create new category', ['class' => 'btn btn-primary']) }}
         {!! Form::close()!!}
       </div>
