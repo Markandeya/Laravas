@@ -32,7 +32,9 @@
   Route::get('blog', 'BlogController@index');
   Route::get('/', 'PageController@index');
   Route::get('about', 'PageController@about');
-  Route::get('contact', 'PageController@contact');
+  Route::get('contact', 'PageController@getContact');
+  Route::post('contact', 'PageController@postContact');
+
 
   // Posts and Categories protected by middleware auth
   Route::resource('posts', 'PostController');
