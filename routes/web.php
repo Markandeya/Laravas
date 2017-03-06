@@ -41,6 +41,9 @@
   Route::resource('categories', 'CategoryController', ['except' => ['create']]);
   Route::resource('tags', 'TagController', ['except' => ['create']]);
 
+  //Comments
+  Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+
   //temporary hack to overcome default /login and /home route on unauthorized access
   Route::get('/login', 'Auth\LoginController@showLoginForm');
   Route::get('/home', 'PageController@index');
