@@ -1,7 +1,7 @@
 @extends('main')
 @section('title', $post->title)
 @section('content')
-  <style media="screen">
+<!--  <style media="screen">
   .triangle-isosceles {
   position:relative;
   padding:15px;
@@ -29,7 +29,7 @@ border-color:#f3961c transparent;
 display:block;
 width:0;
 }
-  </style>
+  </style>-->
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <h1> {{ $post->title }} </h1>
@@ -40,14 +40,22 @@ width:0;
   <hr>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <h2>All comments</h2>
+      <h2><span class="glyphicon glyphicon-comment">&nbsp;</span>{{ $post->comments()->count() }} comments</h2>
 
-      @foreach ($post->comments->orderBy('desc') as $comment)
-        <div class="triangle-isosceles">
-          {{ $comment->comment }}
-          <br>
-          {{ '- by '.$comment->name}}
+      @foreach ($post->comments as $comment)
+        <div class="comment">
+          <div class="author-info">
+            <img src="{{ "https://www.gravatar.com/avatar/".md5( strtolower( trim( $comment->email ) ) ) . "?s=50&d=monsterid" }}" class="author-image"  />
+            <h3>{{ $comment->name}}</h3>
+            <div class="author-date">
+              {{ date('F nS, Y -g:iA', strtotime( $comment->created_at) ) }}
+            </div>
+          <div class="comment-content">
+            {{ $comment->comment }}
+          </div>
+          </div>
         </div>
+
       @endforeach
     </div>
   </div>
