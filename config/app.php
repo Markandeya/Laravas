@@ -181,7 +181,10 @@ return [
          * Collective form elements
          */
         Collective\Html\HtmlServiceProvider::class,
-
+        /*
+         *Purifier for WYSIWYG
+         */
+        Mews\Purifier\PurifierServiceProvider::class,
     ],
 
     /*
@@ -234,6 +237,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         // ...
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
     ],
 
 ];

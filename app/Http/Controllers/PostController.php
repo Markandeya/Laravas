@@ -7,6 +7,7 @@ use App\Post;
 use Session;
 use App\Category;
 use App\Tag;
+use Purifier;
 
 class PostController extends Controller
 {
@@ -58,7 +59,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug  = $request->slug;
         $post->category_id  = $request->category;
-        $post->body = $request->body;
+        $post->body = Purifier::clean($request->body);
         $post->save();
 
         //tag association
@@ -139,7 +140,7 @@ class PostController extends Controller
       $post->title = $request->input('title');
       $post->slug = $request->input('slug');
       $post->category_id  = $request->category;
-      $post->body  = $request->input('body');
+      $post->body  = Purifier::clean($request->input('body'));
       $post->save(['timestamps' => true]);
 
       //tag association with true to override relations
