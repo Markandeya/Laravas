@@ -43,6 +43,10 @@
 
   //Comments
   Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+  Route::get('comments/{id}/edit', ['uses' => 'CommentsController@edit', 'as' => 'comments.edit']);
+  Route::patch('comments/{id}', ['uses' => 'CommentsController@update', 'as' => 'comments.update']);
+  Route::get('comments/{id}/delete', ['uses' => 'CommentsController@delete', 'as' => 'comments.delete']);
+  Route::delete('comments/{id}/delete', ['uses' => 'CommentsController@destroy', 'as' => 'comments.destroy']);
 
   //temporary hack to overcome default /login and /home route on unauthorized access
   Route::get('/login', 'Auth\LoginController@showLoginForm');

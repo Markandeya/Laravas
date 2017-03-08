@@ -78,7 +78,8 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        return view('comments.edit')->withComment($comment);
     }
 
     /**
@@ -87,15 +88,24 @@ class CommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @recomment \Illuminate\comment\
-     $comment->approved = true;
-
-     $comment->save();
-
-     Session::flash(')Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, ['comment' => 'required|min:1']);
+
+        $comment = Comment::find($id);
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        Session::flash('success', 'Comment updated!');
+
+        return redirect()->route('posts.show', $comment->post->id);
+    }
+
+    public function delete($id)
+    {
+      $comment = Comment::find($id);
+      return view('comments.delete')->withComment($comment);
     }
 
     /**
@@ -106,6 +116,12 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+        $post_id = $comment->post->id;
+        $comment->delete();
+
+        Session::flash('success', 'Comment deleted successfully!');
+
+        return redirect()->route('posts.show',$post_id);
     }
 }
