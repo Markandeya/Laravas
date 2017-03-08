@@ -3,6 +3,8 @@
 @section('header')
   {{ Html::style('css/parsley.css') }}
   <link rel="stylesheet" href="/css/select2.min.css">
+  <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
 @endsection
 @section('content')
   {!! Form::model($post, ['route' => ['posts.update', $post->id], 'method' => 'PUT', 'data-parsley-validate' => '']) !!}
@@ -17,7 +19,7 @@
       {{ Form::label('tags', 'Tags:') }}
       {{ Form::select('tags[]', $tags, null,['class' => 'select2-multi form-control', 'multiple' => 'multiple']) }}<br>
       {{ Form::label('body', 'Body:', ['class' => 'form-spacing-top']) }}
-      {{ Form::textarea('body', null, ['class' => 'form-control', 'data-parsley-required' => '']) }}
+      {{ Form::textarea('body', null, ['class' => 'form-control textarea', 'data-parsley-required' => '']) }}
     </div>
     <div class="col-md-4">
       <div class="well">

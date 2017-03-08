@@ -29,7 +29,7 @@
             <tr>
               <td>{{ $post->id }}</td>
               <td>{{ $post->title }}</td>
-              <td>{{ substr($post->body, 0, 50) }} {{strlen($post->body)>50?'...':'' }}</td>
+              <td>{{ strip_tags(substr($post->body, 0, 50)) }} {{strlen(strip_tags($post->body))>50?'...':'' }}</td>
               <td>{{ date('M j, Y h:ia', strtotime($post->created_at)) }}</td>
               <td>{{ date('M j, Y h:ia', strtotime($post->updated_at)) }}</td>
               <td>{{ Html::linkRoute('posts.show', 'View', [$post->id], ['class' => 'btn btn-default']) }}</td>

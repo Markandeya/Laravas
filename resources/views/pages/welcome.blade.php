@@ -17,7 +17,7 @@
       @foreach($posts as $post)
         <div class="post">
             <h2>{{ $post->title }}</h2>
-            <p>{{ substr($post->body, 0, 300) }}{{ strlen($post->body)>300?'...':'' }}</p>
+            <p>{{ substr(strip_tags($post->body), 0, 300) }}{{ strlen(strip_tags($post->body))>300?'...':'' }}</p>
             <a href="{{ url('blog/'.$post->slug) }}" class="btn btn-primary">Read more</a>
         </div>
         <hr>
@@ -26,13 +26,11 @@
     <div class="col-lg-3 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-1">
       <h2>Sidebar</h2><hr>
       <div class="sidePost">
-        <h3>Side post 1</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h3></h3>
+        <p>
+        </p>
       </div>
-      <div class="sidePost">
-        <h3>Side post 2</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
+
     </div>
   </div>
 @endsection

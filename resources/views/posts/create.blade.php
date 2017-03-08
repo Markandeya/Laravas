@@ -3,6 +3,8 @@
 @section('header')
   <link rel="stylesheet" href="/css/parsley.css">
   <link rel="stylesheet" href="/css/select2.min.css">
+  <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
 @endsection
 @section('content')
   <div class="row">
@@ -25,7 +27,7 @@
             <option value="{{ $tag->id }}"> {{ $tag->name }}</option>
           @endforeach
         </select>
-        Body:<textarea name="body" class="form-control" data-parsley-required></textarea>
+        Body:<textarea name="body" class="form-control textarea" ></textarea>
         <br>
         <input type="submit" value="Create" class="btn btn-success btn-block">
       </form>
