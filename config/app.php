@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Laravas &copy;',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,6 +185,10 @@ return [
          *Purifier for WYSIWYG
          */
         Mews\Purifier\PurifierServiceProvider::class,
+        /*
+         *Intervension for image uploads
+         */
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -238,6 +242,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         // ...
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

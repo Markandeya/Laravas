@@ -11,8 +11,8 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-2">
       <h1>Create new post</h1>
       <hr>
-      <form method="post" action="{{ action('PostController@store') }}" data-parsley-validate>
-        {{ csrf_field() }}
+      <form method="post" action="{{ action('PostController@store') }}" enctype="multipart/form-data" data-parsley-validate>
+        {!! csrf_field() !!}
         Title:<input type="text" name="title" class="form-control" data-parsley-required>
         Slug:<input type="text" name="slug" class="form-control" data-parsley-required minlength="5" maxlength="255">
         Category:
@@ -27,7 +27,9 @@
             <option value="{{ $tag->id }}"> {{ $tag->name }}</option>
           @endforeach
         </select>
-        Body:<textarea name="body" class="form-control textarea" ></textarea>
+        Image:
+        <input type="file" name="image" id="image" class="form-control-file" />
+        Body:<textarea name="body" class="form-control textarea" data-parsley-required></textarea>
         <br>
         <input type="submit" value="Create" class="btn btn-success btn-block">
       </form>

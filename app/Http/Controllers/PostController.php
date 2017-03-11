@@ -8,6 +8,7 @@ use Session;
 use App\Category;
 use App\Tag;
 use Purifier;
+use Image;
 
 class PostController extends Controller
 {
@@ -60,6 +61,17 @@ class PostController extends Controller
         $post->slug  = $request->slug;
         $post->category_id  = $request->category;
         $post->body = Purifier::clean($request->body);
+        //dd($request);
+        //check if image was uploaded
+        if ($request->hasFile('image')) {
+          $image = $request->file('image');
+          $fileName = time().'.'.$image->getClientOriginalExtension();
+          $location = public_path('images/'.$fileName);
+          Image::make($image)->resize(800, 400)->save($location);
+          $post->image = $fileName;
+        }
+
+
         $post->save();
 
         //tag association

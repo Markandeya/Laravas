@@ -21,10 +21,10 @@
 
   //Password resets routes
   //show page to type in new password and submit
-  Route::get('password/reset/{token?}', 'Auth\ResetPasswordController@showResetForm');
+  Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
   Route::post('password/reset', 'Auth\ResetPasswordController@reset');
   //show page to type in email and send email
-  Route::get('password/email', 'Auth\ForgotPasswordController@showLinkRequestForm');
+  Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
   Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
   //Static blog pages
@@ -51,6 +51,10 @@
   //temporary hack to overcome default /login and /home route on unauthorized access
   Route::get('/login', 'Auth\LoginController@showLoginForm');
   Route::get('/home', 'PageController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
 
 Auth::routes();
 
