@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <h1> {{ $post->title }} </h1>
-      <img src='{{ asset("images/$post->image") }}' height="400px" width="800px" />
+      <img src='{{ asset("images/$post->image") }}' height="400px" width="800px" alt=""/>
       <p> {!! $post->body !!} </p>
       <p><i> Posted In: {{ $post->category->name }}</i></p>
     </div>

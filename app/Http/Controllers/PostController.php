@@ -9,6 +9,7 @@ use App\Category;
 use App\Tag;
 use Purifier;
 use Image;
+use Storage;
 
 class PostController extends Controller
 {
@@ -52,7 +53,8 @@ class PostController extends Controller
           'title' => 'required|max:255',
           'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
           'category' => 'integer',
-          'body' => 'required'
+          'body' => 'required',
+          'image' => 'sometimes|image'
         ]);
 
         //store onto database::eloquent
@@ -131,21 +133,15 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
       $post = Post::find($id);
-      //validate data
-      if($request->slug == $post->slug) {
-        $this->validate($request, [
-          'title' => 'required|max:255',
-          'category' => 'integer',
-          'body' => 'required'
-        ]);
-      } else {
-        $this->validate($request, [
-          'title' => 'required|max:255',
-          'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-          'category' => 'integer',
-          'body' => 'required'
-        ]);
-      }
+
+      $this->validate($request, [
+        'title' => 'required|max:255',
+        'slug' => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
+        'category' => 'integer',
+        'body' => 'required',
+        'image' => 'sometimes|image'
+      ]);
+
 
       //save to db
 
@@ -153,6 +149,18 @@ class PostController extends Controller
       $post->slug = $request->input('slug');
       $post->category_id  = $request->category;
       $post->body  = Purifier::clean($request->input('body'));
+
+      if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $fileName = time().'.'.$image->getClientOriginalExtension();
+        $location = public_path('images/'.$fileName);
+        Image::make($image)->resize(800, 400)->save($location);
+        $oldImage = $post->image;
+        Storage::delete($oldImage);
+        $post->image = $fileName;
+      }
+
+
       $post->save(['timestamps' => true]);
 
       //tag association with true to override relations
@@ -177,6 +185,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        //path = storage_path('app/public/images/');
+        Storage::delete($post->image);
         $post->tags()->detach();
         $post->delete();
 

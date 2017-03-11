@@ -29,7 +29,7 @@
         </select>
         Image:
         <input type="file" name="image" id="image" class="form-control-file" />
-        Body:<textarea name="body" class="form-control textarea" data-parsley-required></textarea>
+        Body:<textarea name="body" class="form-control textarea"></textarea>
         <br>
         <input type="submit" value="Create" class="btn btn-success btn-block">
       </form>
